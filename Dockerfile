@@ -35,9 +35,11 @@ RUN apt-get update -qq && apt-get install -y -qq \
     libapache2-mod-php7.0 \
     composer
 
-
 # Config Apache
-RUN a2enmod rewrite
+RUN a2enmod rewrite && \
+    a2dismod php7.0 && \
+    a2enmod php7.1
+
 
 COPY ./apache/sites/* /etc/apache2/sites-available/
 RUN a2ensite 001-zf-expressive.conf
